@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --loader ts-node/esm ./src/app.ts",
-    "start": "node ./dist/app.js",
+    "start": "nodemon ./dist/app.js",
     "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix './src/**/*.{js,jsx,ts,tsx}'",
     "format": "prettier --check ./src",
@@ -32,6 +32,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "body-parser": "^1.20.0",
     "debug": "^4.3.4",
     "express": "^4.18.1"
   }
