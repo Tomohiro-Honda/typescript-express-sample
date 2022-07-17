@@ -1,0 +1,15 @@
+{
+  "extends": "@tsconfig/node16/tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["esnext", "esnext.asynciterable", "dom"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "outDir": "./dist",
+  },
+  // トランスパイル対象ディレクトリを指定する
+  "include": [
+    "./src/**/*"
+  ]
+}
