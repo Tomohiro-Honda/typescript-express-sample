@@ -17,7 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 const router: express.Router = express.Router();
 router.get('/', (req: express.Request, res: express.Response) => {
   console.log(process.env.NODE_ENV);
-  res.send('Hello ~');
+  const word = 'HELLO!!!';
+  res.send(word);
 });
 router.post('/api/postTest', (req: express.Request, res: express.Response) => {
   res.send(req.body);
