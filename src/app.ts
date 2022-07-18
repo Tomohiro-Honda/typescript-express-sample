@@ -1,6 +1,11 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
+import todoRoutes from './routes/todos.js';
 
 const app: express.Express = express();
+
+// body-parserに基づいたリクエストの解析
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // CORSの許可
 app.use((req, res, next) => {
@@ -9,24 +14,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// body-parserに基づいた着信リクエストの解析
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// GetとPostのルーティング
-const router: express.Router = express.Router();
-router.get('/', (req: express.Request, res: express.Response) => {
-  console.log(process.env.NODE_ENV);
-  const word = 'HELLO!!!';
-  res.send(word);
-});
-router.post('/api/postTest', (req: express.Request, res: express.Response) => {
-  res.send(req.body);
-});
-app.use(router);
-
 // envファイル定義のポートでAPIサーバ起動
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
+});
+
+/* '/todos' へのリクエストはtodoRoutesのルーティング設定を利用する*/
+app.use('/todos', todoRoutes);
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).json({ message: err.message });
+  next();
 });
