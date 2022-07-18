@@ -17,5 +17,9 @@
     "sourceType": "module",
     "ecmaVersion": 2021,
     "project": "./tsconfig.eslint.json"
+  },
+  "rules": {
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-call": "off"
   }
 }
