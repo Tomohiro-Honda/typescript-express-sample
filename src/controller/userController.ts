@@ -41,7 +41,7 @@ export const getUser: RequestHandler = async (req, res, next): Promise<void> => 
   } else if (result === undefined) {
     next(new Error(`id "${searchId}" is not foud.`));
   } else {
-    const serchUser = new User(result.id, result.name, result.age, result.email);
+    const serchUser = new User(result.id, result.name, result.age, result.email, result.department);
     if (!res.headersSent) {
       res.json({ user: serchUser });
     }
@@ -57,7 +57,7 @@ export const getUserList: RequestHandler = async (req, res, next): Promise<void>
   } else {
     const serchUser = result;
     if (!res.headersSent) {
-      res.json({ users: result });
+      res.json({ users: serchUser });
     }
   }
 };
