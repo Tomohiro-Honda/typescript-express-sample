@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import todoRoutes from './routes/todos.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app: express.Express = express();
 
@@ -20,8 +20,8 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
 
-/* '/todos' へのリクエストはtodoRoutesのルーティング設定を利用する*/
-app.use('/todos', todoRoutes);
+/* '/user' へのリクエストはuserRoutesのルーティング設定を利用する*/
+app.use('/user', userRoutes);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ message: err.message });
