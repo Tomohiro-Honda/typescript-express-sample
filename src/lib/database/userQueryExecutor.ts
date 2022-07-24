@@ -5,7 +5,7 @@ import { dbClient } from './client.js';
 export const findUserById = async (id: string): Promise<User[] | null> => {
   let result: User[] | null = null;
   try {
-    const sql = 'SELECT id, name, age, email FROM t_employee WHERE ID = ?';
+    const sql = 'SELECT id, name, age, email, department FROM t_employee WHERE ID = ?';
     const row = await dbClient.executeFindQuery(sql, [id], User);
     result = row as User[] | null;
   } catch (err) {
@@ -18,7 +18,7 @@ export const findUserById = async (id: string): Promise<User[] | null> => {
 export const findAllUser = async (): Promise<User[] | null> => {
   let result: User[] | null = null;
   try {
-    const sql = 'SELECT id, name, age, email FROM t_employee WHERE retirement_flag = ?';
+    const sql = 'SELECT id, name, age, email, department FROM t_employee WHERE retirement_flag = ?';
     const row = await dbClient.executeFindQuery(sql, [0], User);
     result = row as User[] | null;
   } catch (err) {
