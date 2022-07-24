@@ -11,7 +11,7 @@ const router = Router();
 
 router.post('/', createUser);
 
-router.get('/:id', getUser);
+router.get('/:id([0-9]+)', getUser);
 
 router.get('/all', getUserList);
 

@@ -1,11 +1,14 @@
 {
-  "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
     "module": "esnext",
-    "moduleResolution": "node",
     "lib": ["esnext", "esnext.asynciterable", "dom"],
-    "resolveJsonModule": true,
+    "target": "es2021",
+    "strict": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "outDir": "./dist",
   },
   // トランスパイル対象ディレクトリを指定する

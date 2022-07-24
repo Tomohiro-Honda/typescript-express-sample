@@ -1,15 +1,33 @@
 import { RequestHandler } from 'express';
 import { User } from '../models/user.js';
-import { getUserService } from '../services/userService.js';
+import { getUserAllService, getUserService, postUserService } from '../services/userService.js';
 
 const userList: User[] = [];
 
 /* 新規ユーザー追加 */
-export const createUser: RequestHandler = (req, res) => {
-  // const text = (req.body as { text: string }).text;
-  // const newUser = new User(Math.random().toString(), text);
-  // userList.push(newUser);
-  // res.status(201).json({ message: 'created new Todo.', createdTodo: newUser });
+export const createUser: RequestHandler = async (req, res, next): Promise<void> => {
+  const postData = req.body as {
+    name: string;
+    age: string;
+    email: string;
+    password: string;
+    department: string;
+  };
+  const { name, age, email, password, department } = {
+    ...postData,
+    age: Number(postData.age),
+  };
+
+  const result = await postUserService(name, age, email, password, department);
+
+  if (result !== 1) {
+    console.log(result);
+    next(new Error(`server error`));
+  }
+
+  if (!res.headersSent) {
+    res.status(201).json({ message: 'succeed create new User.' });
+  }
 };
 
 /* ID指定でユーザー情報取得 */
@@ -31,8 +49,17 @@ export const getUser: RequestHandler = async (req, res, next): Promise<void> => 
 };
 
 /* ユーザーリスト取得 */
-export const getUserList: RequestHandler = (req, res) => {
-  // res.json({ userList: userList });
+export const getUserList: RequestHandler = async (req, res, next): Promise<void> => {
+  const result = await getUserAllService();
+
+  if (result === null) {
+    next(new Error(`server error`));
+  } else {
+    const serchUser = result;
+    if (!res.headersSent) {
+      res.json({ users: result });
+    }
+  }
 };
 
 export const updateUser: RequestHandler<{ id: string }> = (req, res) => {
