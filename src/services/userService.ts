@@ -1,4 +1,10 @@
-import { findAllUser, findUserById, registerUser } from '../lib/database/userQueryExecutor.js';
+import {
+  findAllUser,
+  findUserById,
+  registerUser,
+  updateUser,
+  deleteUser,
+} from '../lib/database/userQueryExecutor.js';
 import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
 
@@ -20,7 +26,7 @@ export const getUserAllService = async (): Promise<User[] | undefined | null> =>
   return content;
 };
 
-export const postUserService = async (
+export const createUserService = async (
   name: string,
   age: number,
   email: string,
@@ -31,4 +37,20 @@ export const postUserService = async (
   const salt = await bcrypt.genSalt(10, 'b');
   const hashPW = await bcrypt.hash(password, salt);
   return await registerUser(name, age, email, hashPW, department);
+};
+
+export const updateUserService = async (
+  id: number,
+  name: string,
+  age: number,
+  email: string,
+  department: string,
+): Promise<number> => {
+  //  データチェック等をここで入れる
+
+  return await updateUser(id, name, age, email, department);
+};
+
+export const deleteUserService = async (id: number): Promise<number> => {
+  return await deleteUser(id);
 };
