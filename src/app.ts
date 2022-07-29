@@ -1,5 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
 import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import path from 'path';
+
+export const appPath = new URL(import.meta.url).pathname;
+export const __dirname = path.join(appPath, '../');
 
 const app: express.Express = express();
 
@@ -20,8 +25,10 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
 
-/* '/user' へのリクエストはuserRoutesのルーティング設定を利用する*/
+// Routes
 app.use('/user', userRoutes);
+
+app.use('/auth', authRoutes);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ message: err.message });

@@ -12,7 +12,6 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/src/app.ts",
-      "envFile": "${workspaceFolder}/.env",
       "runtimeArgs": ["--loader" ,"ts-node/esm"]
     }
   ]

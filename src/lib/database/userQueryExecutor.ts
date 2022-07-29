@@ -1,5 +1,6 @@
 import { ResultSetHeader } from 'mysql2';
 import { User } from '../../models/user.js';
+import { authUser } from '../../models/authUser.js';
 import { dbClient } from './client.js';
 
 export const findUserById = async (id: string): Promise<User[] | null> => {
@@ -8,6 +9,20 @@ export const findUserById = async (id: string): Promise<User[] | null> => {
     const sql = 'SELECT id, name, age, email, department FROM t_employee WHERE ID = ?';
     const row = await dbClient.executeFindQuery(sql, [id], User);
     result = row as User[] | null;
+  } catch (err) {
+    console.log(err);
+  }
+
+  return result;
+};
+
+// authentication
+export const findUserByEmail = async (email: string): Promise<authUser[] | null> => {
+  let result: authUser[] | null = null;
+  try {
+    const sql = 'SELECT id, name, age, email, password, department FROM t_employee WHERE email = ?';
+    const row = await dbClient.executeFindQuery(sql, [email], authUser);
+    result = row as authUser[] | null;
   } catch (err) {
     console.log(err);
   }
